@@ -26,7 +26,7 @@ document.getElementById('connectButton').addEventListener('click', async () => {
 
   connection.on("ReceiveMessage", (user, message) => {
     console.log("Received message: ", user, message);
-    const msg = `<p class="mt-2 text-gray-600 dark:text-gray-400">Message ${message} from ${user}</p>`;
+    const msg = `<p class="mt-2 text-gray-600 dark:text-gray-400">Message "${message}" from ${user}</p>`;
     const messageContainer = document.getElementById("messageContainer");
 
     // messageContainer.appendChild(msg);
@@ -34,4 +34,20 @@ document.getElementById('connectButton').addEventListener('click', async () => {
   });
 
   await connection.start();
+});
+
+document.getElementById('messageForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+});
+
+document.getElementById('sendMessageButton').addEventListener('click', async () => {
+  const targetUser = document.getElementById('targetUserInput').value.trim();
+  const message = document.getElementById('messageInput').value.trim();
+
+  if (!targetUser || !message) {
+    alert('Please enter a target user and a message.');
+    return;
+  }
+
+  await connection.invoke('SendMessage', targetUser, message);
 });

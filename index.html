@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="flex justify-center items-center h-screen bg-neutral-100 dark:bg-neutral-900">
-      <div class="flex flex-col max-w-md mx-auto p-4">
+      <div class="flex flex-col max-w-md mx-auto p-4 gap-4">
         <form id="connectForm" class="flex gap-2">
           <input
             type="text"
@@ -22,6 +22,36 @@
             class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             Connect
+          </button>
+        </form>
+
+        <form id="messageForm" class="flex flex-col gap-4">
+          <div>
+            <label for="targetUserInput" class="mt-4 text-gray-700 dark:text-white">
+              Target Username:
+            </label>
+            <input
+              type="text"
+              id="targetUserInput"
+              placeholder="Enter your message"
+              class="w-full p-2 border border-gray-300 rounded-md dark:bg-neutral-800 dark:text-white dark:border-neutral-700 mt-2" />
+          </div>
+
+          <div>
+            <label for="messageInput" class="mt-4 text-gray-700 dark:text-white">
+              Message:
+            </label>
+            <input
+              type="text"
+              id="messageInput"
+              placeholder="Enter your message"
+              class="w-full p-2 border border-gray-300 rounded-md dark:bg-neutral-800 dark:text-white dark:border-neutral-700 mt-2" />
+          </div>
+          <button
+            type="submit"
+            id="sendMessageButton"
+            class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 mt-4">
+            Send Message
           </button>
         </form>
 
