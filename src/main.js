@@ -4,17 +4,34 @@ import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
 import { HubConnectionBuilder } from '@microsoft/signalr'
 
-const connection = new HubConnectionBuilder()
-  .withUrl("http://localhost:5152/chathub")
-  .build();
+let connection = null;
 
-connection.on("ReceiveMessage", (user, message) => {
-  console.log("Received message: ", user, message);
-  const msg = `<p class="mt-2 text-gray-600 dark:text-gray-400">Message ${message} from ${user}</p>`;
-  const messageContainer = document.getElementById("messageContainer");
-
-  // messageContainer.appendChild(msg);
-  messageContainer.innerHTML += msg;
+document.getElementById('connectForm').addEventListener('submit', (event) => {
+  event.preventDefault();
 });
 
-connection.start();
+document.getElementById('connectButton').addEventListener('click', async () => {
+  const username = document.getElementById("usernameInput").value.trim();
+
+  if (!username) {
+    alert("Please enter a username.");
+    return;
+  }
+
+  document.getElementById("usernameInput").disabled = true;
+
+  connection = new HubConnectionBuilder()
+    .withUrl(`http://localhost:5152/chathub?username=${encodeURIComponent(username)}`)
+    .build();
+
+  connection.on("ReceiveMessage", (user, message) => {
+    console.log("Received message: ", user, message);
+    const msg = `<p class="mt-2 text-gray-600 dark:text-gray-400">Message ${message} from ${user}</p>`;
+    const messageContainer = document.getElementById("messageContainer");
+
+    // messageContainer.appendChild(msg);
+    messageContainer.innerHTML += msg;
+  });
+
+  await connection.start();
+});
